@@ -1,0 +1,41 @@
+{
+  "info": {
+    "name": "Parking 24 Seven - Spring Boot",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "baseUrl", "value": "http://localhost:8081"}
+  ],
+  "item": [
+    {
+      "name": "Listar usuarios",
+      "request": {"method": "GET", "url": "{{baseUrl}}/api/usuarios"}
+    },
+    {
+      "name": "Buscar usuario",
+      "request": {"method": "GET", "url": "{{baseUrl}}/api/usuarios/1"}
+    },
+    {
+      "name": "Crear usuario",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\n  \"nomusu\": \"operador01\",\n  \"passusu\": \"ClaveSegura123\"\n}"},
+        "url": "{{baseUrl}}/api/usuarios"
+      }
+    },
+    {
+      "name": "Actualizar usuario",
+      "request": {
+        "method": "PUT",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "body": {"mode": "raw", "raw": "{\n  \"nomusu\": \"operador_actualizado\",\n  \"passusu\": \"NuevaClave123\"\n}"},
+        "url": "{{baseUrl}}/api/usuarios/1"
+      }
+    },
+    {
+      "name": "Eliminar usuario",
+      "request": {"method": "DELETE", "url": "{{baseUrl}}/api/usuarios/1"}
+    }
+  ]
+}
