@@ -1,12 +1,17 @@
 package com.parking24seven.repository;
 
 import com.parking24seven.model.Usuario;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Repositorio JPA para las operaciones de persistencia de usuarios.
+ * Repositorio JPA para las operaciones
+ * de persistencia de usuarios.
  */
-public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+public interface UsuarioRepository
+        extends JpaRepository<Usuario, Integer> {
 
     boolean existsByNomusu(String nomusu);
+
+    Optional<Usuario> findByNomusu(String nomusu);
 }

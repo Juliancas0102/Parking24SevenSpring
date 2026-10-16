@@ -23,19 +23,60 @@ public class Usuario {
     private String nomusu;
 
     /**
-     * La contraseña se acepta al crear/actualizar, pero nunca se devuelve en JSON.
+     * La contraseña se acepta al crear/actualizar,
+     * pero nunca se devuelve en las respuestas JSON.
      */
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "passusu", nullable = false, length = 255)
     private String passusu;
 
+    /**
+     * Rol asignado al usuario dentro del sistema.
+     * Ejemplos: ADMINISTRADOR, OPERADOR.
+     */
+    @Column(
+        name = "rol",
+        nullable = false,
+        length = 30,
+        columnDefinition = "varchar(30) default 'OPERADOR'"
+    )
+    private String rol = "OPERADOR";
+
+    /**
+     * Indica si el usuario puede acceder al sistema.
+     * La desactivación conserva el registro y su historial.
+     */
+    @Column(
+        name = "activo",
+        nullable = false,
+        columnDefinition = "boolean default true"
+    )
+    private Boolean activo = true;
+
     public Usuario() {
     }
 
+    // Se conserva para no afectar el código y pruebas existentes.
     public Usuario(Integer id, String nomusu, String passusu) {
         this.id = id;
         this.nomusu = nomusu;
         this.passusu = passusu;
+        this.rol = "OPERADOR";
+        this.activo = true;
+    }
+
+    public Usuario(
+            Integer id,
+            String nomusu,
+            String passusu,
+            String rol,
+            Boolean activo) {
+
+        this.id = id;
+        this.nomusu = nomusu;
+        this.passusu = passusu;
+        this.rol = rol;
+        this.activo = activo;
     }
 
     public Integer getId() {
@@ -60,5 +101,21 @@ public class Usuario {
 
     public void setPassusu(String passusu) {
         this.passusu = passusu;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 }

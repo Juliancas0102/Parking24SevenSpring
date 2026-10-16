@@ -16,5 +16,7 @@ public interface UsuarioService {
 
     Usuario actualizar(Integer id, Usuario usuario);
 
-    void eliminar(Integer id);
+    Usuario desactivar(Integer id);
+
+    Usuario autenticar(String nomusu, String passusu);
 }
