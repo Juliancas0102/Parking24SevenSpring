@@ -1,6 +1,6 @@
 # Parking 24 Seven - Spring Boot
 
-Módulo web REST desarrollado para la evidencia **GA7-220501096-AA3-EV01**.
+Módulo REST desarrollado para la evidencia **GA7-220501096-AA3-EV02** del proyecto **Parking 24 Seven**.
 
 ## Tecnologías
 
@@ -9,56 +9,63 @@ Módulo web REST desarrollado para la evidencia **GA7-220501096-AA3-EV01**.
 - Spring Web
 - Spring Data JPA
 - MySQL Driver
-- Lombok
-- Spring Boot DevTools
 - Maven
+- Hibernate / JPA
 
 ## Arquitectura
 
-El código se organiza por responsabilidades:
+El proyecto se encuentra organizado por responsabilidades:
 
-- `model`: entidad JPA `Usuario`.
-- `repository`: persistencia con `JpaRepository`.
-- `service`: reglas de negocio y hash PBKDF2 de contraseñas.
-- `controller`: API REST.
-- `exception`: manejo centralizado de errores.
-- `util`: utilidades de seguridad.
+- `model`: contiene la entidad JPA `Usuario`.
+- `repository`: acceso y persistencia de datos mediante `JpaRepository`.
+- `service`: lógica de negocio, validaciones, autenticación y gestión de usuarios.
+- `controller`: exposición de servicios mediante API REST.
+- `exception`: manejo centralizado de excepciones y respuestas de error.
+- `util`: utilidades de seguridad para tratamiento de contraseñas.
+
+## Módulo de usuarios
+
+El módulo implementa operaciones para administrar usuarios de Parking 24 Seven.
+
+Cada usuario contiene principalmente:
+
+- Identificador único.
+- Nombre de usuario.
+- Contraseña protegida mediante PBKDF2.
+- Rol.
+- Estado activo o inactivo.
+
+## Roles implementados
+
+El sistema admite los siguientes roles:
+
+- `ADMINISTRADOR`
+- `OPERADOR`
+- `CONTADOR`
+- `CLIENTE`
+
+Los roles son normalizados y validados desde la capa de servicio.
 
 ## Base de datos
 
-La aplicación usa el esquema `parking24seven` y la tabla `usuarios`.
-El script de creación se encuentra en `database/parking24seven.sql`.
+La aplicación utiliza MySQL y trabaja con el esquema:
 
-La contraseña de MySQL **no se guarda en el repositorio**. Antes de ejecutar, defina:
+`parking24seven`
 
-Windows PowerShell:
+La entidad `Usuario` se relaciona con la tabla:
+
+`usuarios`
+
+El script de base de datos se encuentra en:
+
+`database/parking24seven.sql`
+
+La contraseña de MySQL no debe almacenarse directamente en el repositorio.
+
+Para ejecutar localmente puede configurarse mediante variables de entorno.
+
+Ejemplo en Windows PowerShell:
 
 ```powershell
 $env:DB_USER="root"
 $env:DB_PASSWORD="SU_CLAVE_MYSQL"
-```
-
-## Ejecución
-
-Desde NetBeans, ejecute la clase `Parking24SevenSpringApplication`.
-La API queda disponible en `http://localhost:8081`.
-
-## Endpoints
-
-| Método | Ruta | Operación |
-|---|---|---|
-| GET | `/api/usuarios` | Listar usuarios |
-| GET | `/api/usuarios/{id}` | Consultar usuario |
-| POST | `/api/usuarios` | Crear usuario |
-| PUT | `/api/usuarios/{id}` | Actualizar usuario |
-| DELETE | `/api/usuarios/{id}` | Eliminar usuario |
-
-La contraseña se recibe en las operaciones de escritura, se almacena con PBKDF2 y no se expone en las respuestas JSON.
-
-## Pruebas
-
-Se incluye una colección de Postman en:
-
-`postman/Parking24SevenSpring.postman_collection.json`
-
-También se incluyen pruebas unitarias del servicio en `src/test/java`.
